@@ -1,0 +1,182 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: DBT
+
+; Microsoft Dynamics AX Table : GOA_MassiveXMLUpload unloaded
+; --------------------------------------------------------------------------------
+  TABLEVERSION 1
+  
+  TABLE #GOA_MassiveXMLUpload
+    EnforceFKRelation 0
+    PROPERTIES
+      Name                #GOA_MassiveXMLUpload
+      PrimaryIndex        #idxUpld
+      ClusterIndex        #idxUpld
+      Origin              #{6E1EB4DF-EC30-49E5-B5DC-CF0466AB57C8}
+      LegacyId            #50266
+    ENDPROPERTIES
+    
+    FIELDS
+      FIELD #IndexId
+        INT
+        PROPERTIES
+          Name                #IndexId
+          Label               #Index ID
+          Table               #GOA_MassiveXMLUpload
+          Origin              #{3CFB716F-C4D0-4D9F-B3F8-8FDCE2E29BF8}
+        ENDPROPERTIES
+        
+      FIELD #InsertTab
+        ENUM
+        PROPERTIES
+          Name                #InsertTab
+          Label               #Inser
+          Table               #GOA_MassiveXMLUpload
+          Origin              #{CFEB14BC-2662-488B-B7E2-111BDEB1BA08}
+          LegacyId            #50005
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #RefTableId
+        INT
+        PROPERTIES
+          Name                #RefTableId
+          Label               #@SYS22596
+          Table               #GOA_MassiveXMLUpload
+          Origin              #{8AC48111-72DB-4936-836E-2C5C6C0E455E}
+          LegacyId            #50001
+          ExtendedDataType    #RefTableId
+        ENDPROPERTIES
+        
+      FIELD #UpdateTab
+        ENUM
+        PROPERTIES
+          Name                #UpdateTab
+          Label               #@SYS71207
+          Table               #GOA_MassiveXMLUpload
+          Origin              #{37B64FFE-E8B2-4FB6-9B9F-6D022403A199}
+          LegacyId            #50004
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #Upload
+        ENUM
+        PROPERTIES
+          Name                #Upload
+          Label               #@SYS117211
+          Table               #GOA_MassiveXMLUpload
+          Origin              #{24190E31-1BC4-42C9-9504-CBDCAA89096C}
+          LegacyId            #50003
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #XMLFilename
+        STRING
+        PROPERTIES
+          Name                #XMLFilename
+          Table               #GOA_MassiveXMLUpload
+          Origin              #{D4C35D82-1B98-4989-ABF6-087110517925}
+          LegacyId            #50002
+          ExtendedDataType    #FilenameSave
+          StringSize          #259
+        ENDPROPERTIES
+        
+    ENDFIELDS
+    GROUPS
+    ENDGROUPS
+    
+    INDICES
+      #idxUpld
+      PROPERTIES
+        Name                #idxUpld
+        AllowDuplicates     #No
+        Origin              #{6805C1C3-FD62-492C-B104-A5F8EBAD73D7}
+        LegacyId            #50001
+      ENDPROPERTIES
+      
+      INDEXFIELDS
+      ENDINDEXFIELDS
+      
+    ENDINDICES
+    FULLTEXTINDICES
+    ENDFULLTEXTINDICES
+    REFERENCES
+    ENDREFERENCES
+    
+    DELETEACTIONS
+    ENDDELETEACTIONS
+    
+    METHODS
+      SOURCE #dataPerCompany
+        #display boolean dataPerCompany()
+        #{
+        #    boolean ret;
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #indexName
+        #display Name indexName()
+        #{
+        #
+        #    DictIndex   dictIndex;
+        #    ;
+        #    dictIndex = new DictIndex(this.RefTableId, this.indexId);
+        #
+        #     if(dictIndex)
+        #         return dictIndex.name();
+        #     else
+        #        return "";
+        #}
+      ENDSOURCE
+      SOURCE #tabGroup
+        #display boolean tabGroup()
+        #{
+        #    boolean ret;
+        #    return ret;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #tabLabel
+        #display str tabLabel()
+        #{
+        #    str ret;
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #tableName
+        #display Name tableName()
+        #{
+        #    DictTable                                   dictTable;
+        #    ;
+        #     dictTable   = new DictTable(this.RefTableId);
+        #     if(dictTable)
+        #         return dictTable.name();
+        #     else
+        #        return "";
+        #}
+      ENDSOURCE
+      SOURCE #tabRecords
+        #display int tabRecords()
+        #{
+        #    int ret;
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #GOA_Version
+        #public static FreeTxt GOA_Version()
+        #{
+        #    FreeTxt versionStr;
+        #    str     cr = '\n';
+        #    ;
+        #
+        #    versionStr += ' 1.0 : UNG/GorAn/DE_13/03.08.2015 - Task0115001498 / Massive XML Upload      ' + cr;
+        #    return versionStr;
+        #
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDTABLE
+  
+
+***Element: END

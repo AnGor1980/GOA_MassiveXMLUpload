@@ -1,0 +1,24 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: FTM
+
+; Microsoft Dynamics AX MENUITEM : GOA_ExportTableXML unloaded
+; --------------------------------------------------------------------------------
+  VERSION 1
+  
+  MENUITEM #GOA_ExportTableXML
+    Type: 3
+    PROPERTIES
+      Name                #GOA_ExportTableXML
+      Label               #Export table
+      ObjectType          #Class
+      Object              #GOA_ExportTableXML
+      RunOn               #Client
+      Origin              #{F386E2F1-12EA-4091-BAC1-A364071F146B}
+    ENDPROPERTIES
+    
+  ENDMENUITEM
+  
+
+***Element: END

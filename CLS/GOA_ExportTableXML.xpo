@@ -1,0 +1,103 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: GOA_ExportTableXML unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #GOA_ExportTableXML
+    PROPERTIES
+      Name                #GOA_ExportTableXML
+      Extends             #GOA_CreateXMLTemplateForUpld
+      Origin              #{7FED1EE8-9D30-4077-A79A-E22B15329986}
+      LegacyId            #50488
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #classDeclaration
+        #class GOA_ExportTableXML extends GOA_CreateXMLTemplateForUpld
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #export
+        #void export()
+        #{
+        #    int field;
+        #    int fieldId;
+        #    Common  tableForTTS;
+        #    str nodeTetx;
+        #
+        #    int c = 0;
+        #
+        #    ;
+        #    tableForTTS = dictTable.makeRecord();
+        #
+        #    while select tableForTTS
+        #    {
+        #        nodeTable = doc.createElement(DictTable.name());
+        #        nodeXml.appendChild(nodeTable);
+        #
+        #        for (field=1; field <= dictTable.fieldCnt(); field++)
+        #        {
+        #            fieldId = dictTable.fieldCnt2Id(field);
+        #            dictField = new DictField(refTableId, fieldId);
+        #
+        #            if (!dictField.isSystem())
+        #            {
+        #                nodeField = doc.createElement(dictField.name());
+        #                switch (dictField.baseType())
+        #                {
+        #                    case Types::Date:
+        #                        nodeTetx = date2str(tableForTTS.(fieldId),123,DateDay::Digits2,DateSeparator::Dot, DateMonth::Digits2,DateSeparator::Dot,DateYear::Digits4) ; //= str2date(nodeTetx,123);
+        #                        break;
+        #                    case Types::UtcDateTime :
+        #                        nodeTetx = datetime2str(tableForTTS.(fieldId)); // = str2datetime(nodeTetx ,321 );
+        #                        break;
+        #                    case Types::Guid:
+        #                        nodeTetx = GUID2str(tableForTTS.(fieldId)); // = str2GUID(nodeTetx);
+        #                        break;
+        #                    case Types::Enum:
+        #                        nodeTetx = tableForTTS.(fieldId);
+        #                    default :
+        #                        nodeTetx = tableForTTS.(fieldId); // = nodeTetx;
+        #                        break;
+        #                }
+        #
+        #                nodeField.appendChild(doc.createTextNode(nodeTetx));
+        #                nodeTable.appendChild(nodeField);
+        #            }
+        #        }
+        #
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #void run()
+        #{
+        #    ;
+        #    dictTable = new DictTable(refTableId);
+        #    this.initXML();
+        #    this.export();
+        #    doc.save(filepath);
+        #    info(strfmt("File created: %1", filepath));
+        #
+        #}
+      ENDSOURCE
+      SOURCE #main
+        #public static void main(Args _args)
+        #{
+        #    GOA_ExportTableXML    exportTableXML;
+        #    GOA_MassiveXMLUpload rec;
+        #    ;
+        #    rec = _args.record();
+        #    exportTableXML = new GOA_ExportTableXML(rec.XMLFilename, rec.RefTableId);
+        #
+        #    exportTableXML.run();
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: END

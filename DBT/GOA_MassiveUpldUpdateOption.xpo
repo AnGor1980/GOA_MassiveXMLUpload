@@ -1,0 +1,162 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: DBT
+
+; Microsoft Dynamics AX Table : GOA_MassiveUpldUpdateOption unloaded
+; --------------------------------------------------------------------------------
+  TABLEVERSION 1
+  
+  TABLE #GOA_MassiveUpldUpdateOption
+    EnforceFKRelation 0
+    PROPERTIES
+      Name                #GOA_MassiveUpldUpdateOption
+      PrimaryIndex        #idxUpdateOption
+      ClusterIndex        #idxUpdateOption
+      Origin              #{1E906D96-057B-4BED-B1F0-97FC02C85A39}
+      LegacyId            #50274
+    ENDPROPERTIES
+    
+    FIELDS
+      FIELD #FieldName
+        STRING
+        PROPERTIES
+          Name                #FieldName
+          AllowEditOnCreate   #No
+          AllowEdit           #No
+          Table               #GOA_MassiveUpldUpdateOption
+          Origin              #{E193F015-4476-490B-91AA-1075403DC4C3}
+          LegacyId            #50005
+          ExtendedDataType    #FieldName
+          StringSize          #40
+        ENDPROPERTIES
+        
+      FIELD #GOA_Update
+        ENUM
+        PROPERTIES
+          Name                #GOA_Update
+          Table               #GOA_MassiveUpldUpdateOption
+          Origin              #{5A5C1B73-23C5-43A0-B2D4-707139127971}
+          LegacyId            #50004
+          ExtendedDataType    #GOA_Update
+          EnumType            #NoYes
+        ENDPROPERTIES
+        
+      FIELD #RefFieldId
+        INT
+        PROPERTIES
+          Name                #RefFieldId
+          Label               #FieldId
+          Table               #GOA_MassiveUpldUpdateOption
+          Origin              #{C842E2ED-26BB-48BB-A2D3-F1C6631A7DD4}
+          LegacyId            #50003
+          ExtendedDataType    #RefFieldId
+        ENDPROPERTIES
+        
+      FIELD #RefTableId
+        INT
+        PROPERTIES
+          Name                #RefTableId
+          Label               #@SYS22596
+          Table               #GOA_MassiveUpldUpdateOption
+          Origin              #{23ABA52D-7EEB-420E-B3C4-B3875E073BA8}
+          LegacyId            #50001
+          ExtendedDataType    #RefTableId
+        ENDPROPERTIES
+        
+    ENDFIELDS
+    GROUPS
+      GROUP #AllFields
+        PROPERTIES
+          Name                #AllFields
+        ENDPROPERTIES
+        
+        GROUPFIELDS
+          #RefTableId
+          #RefFieldId
+          #GOA_Update
+        ENDGROUPFIELDS
+      ENDGROUP
+    ENDGROUPS
+    
+    INDICES
+      #idxUpdateOption
+      PROPERTIES
+        Name                #idxUpdateOption
+        AllowDuplicates     #No
+        Origin              #{718B9606-C75B-43A6-8BF6-26E0023BCAB5}
+        LegacyId            #50001
+      ENDPROPERTIES
+      
+      INDEXFIELDS
+      ENDINDEXFIELDS
+      
+    ENDINDICES
+    FULLTEXTINDICES
+    ENDFULLTEXTINDICES
+    REFERENCES
+      REFERENCE #GOA_MassiveXMLUpload
+        PROPERTIES
+          Name                #GOA_MassiveXMLUpload
+          Table               #GOA_MassiveXMLUpload
+        ENDPROPERTIES
+        
+        FIELDREFERENCES
+          REFERENCETYPE NORMAL
+          PROPERTIES
+            Field               #RefTableId
+            RelatedField        #RefTableId
+          ENDPROPERTIES
+          
+        ENDFIELDREFERENCES
+      ENDREFERENCE
+    ENDREFERENCES
+    
+    DELETEACTIONS
+    ENDDELETEACTIONS
+    
+    METHODS
+      SOURCE #fieldName
+        #display TableName fieldName()
+        #{
+        #    DictField dictField;
+        #    ;
+        #    dictField = new DictField(this.RefTableId, this.RefFieldId);
+        #      return dictField ? dictField.name() : "";
+        #}
+      ENDSOURCE
+      SOURCE #GOA_isEnum
+        #display boolean GOA_isEnum()
+        #{
+        #    DictField   dictField;
+        #    ;
+        #    dictField = new DictField(this.RefTableId, this.RefFieldId);
+        #    return (dictField.baseType() == Types::Enum);
+        #}
+      ENDSOURCE
+      SOURCE #find
+        #public static GOA_MassiveUpldUpdateOption find(RefTableId _RefTableId, RefFieldId _RefFieldId)
+        #{
+        #    GOA_MassiveUpldUpdateOption massiveUpldUpdateOption;
+        #    ;
+        #    select massiveUpldUpdateOption where
+        #        massiveUpldUpdateOption.RefTableId == _RefTableId && massiveUpldUpdateOption.RefFieldId == _RefFieldId;
+        #
+        #    return massiveUpldUpdateOption;
+        #}
+      ENDSOURCE
+      SOURCE #GOA_Version
+        #public static FreeTxt GOA_Version()
+        #{
+        #    FreeTxt versionStr;
+        #    str     cr = '\n';
+        #    ;
+        #    versionStr += ' 1.0 : UNG/GorAn/DE_13/22.07.2015 - Task0115001498 / Massive XML Upload  ' + cr;
+        #    return versionStr;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDTABLE
+  
+
+***Element: END

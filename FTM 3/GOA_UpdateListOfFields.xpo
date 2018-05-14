@@ -1,0 +1,24 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: FTM
+
+; Microsoft Dynamics AX MENUITEM : GOA_UpdateListOfFields unloaded
+; --------------------------------------------------------------------------------
+  VERSION 1
+  
+  MENUITEM #GOA_UpdateListOfFields
+    Type: 3
+    PROPERTIES
+      Name                #GOA_UpdateListOfFields
+      Label               #Update the list of fields
+      ObjectType          #Class
+      Object              #GOA_UpdateListOfFields
+      RunOn               #Client
+      Origin              #{39EF5580-077D-407B-BE35-F207EFDF8A44}
+    ENDPROPERTIES
+    
+  ENDMENUITEM
+  
+
+***Element: END

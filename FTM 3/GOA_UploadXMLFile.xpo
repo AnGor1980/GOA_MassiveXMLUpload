@@ -1,0 +1,24 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: FTM
+
+; Microsoft Dynamics AX MENUITEM : GOA_UploadXMLFile unloaded
+; --------------------------------------------------------------------------------
+  VERSION 1
+  
+  MENUITEM #GOA_UploadXMLFile
+    Type: 3
+    PROPERTIES
+      Name                #GOA_UploadXMLFile
+      Label               #@SYS117211
+      ObjectType          #Class
+      Object              #GOA_UploadXML
+      RunOn               #Client
+      Origin              #{97277761-2B8E-402E-945B-B6F29A5D51D2}
+    ENDPROPERTIES
+    
+  ENDMENUITEM
+  
+
+***Element: END

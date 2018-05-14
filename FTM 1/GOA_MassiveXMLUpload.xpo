@@ -1,0 +1,22 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: FTM
+
+; Microsoft Dynamics AX MENUITEM : GOA_MassiveXMLUpload unloaded
+; --------------------------------------------------------------------------------
+  VERSION 1
+  
+  MENUITEM #GOA_MassiveXMLUpload
+    Type: 1
+    PROPERTIES
+      Name                #GOA_MassiveXMLUpload
+      Label               #Massive XML Upload
+      Object              #GOA_MassiveXMLUpload
+      Origin              #{B70E73F2-292A-45E6-BA3F-DD5386257554}
+    ENDPROPERTIES
+    
+  ENDMENUITEM
+  
+
+***Element: END

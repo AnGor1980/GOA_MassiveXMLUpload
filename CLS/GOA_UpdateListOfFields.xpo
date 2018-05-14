@@ -1,0 +1,93 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: GOA_UpdateListOfFields unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #GOA_UpdateListOfFields
+    PROPERTIES
+      Name                #GOA_UpdateListOfFields
+      Origin              #{F2F38DD5-F142-4359-B31C-6A08BA2B62F8}
+      LegacyId            #50411
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #classDeclaration
+        #class GOA_UpdateListOfFields
+        #{
+        #    RefTableId  refTableId;
+        #    DictTable   dictTable;
+        #}
+      ENDSOURCE
+      SOURCE #new
+        #void new(RefTableId _RefTableId)
+        #{
+        #    ;
+        #    refTableId = _RefTableId;
+        #    dictTable = new DictTable(_RefTableId);
+        #
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #void run()
+        #{
+        #    int field;
+        #    int fieldId;
+        #    DictField dictField;
+        #    GOA_MassiveUpldUpdateOption massiveUpldUpdateOption;
+        #    ;
+        #
+        #    ttsbegin;
+        #    delete_from massiveUpldUpdateOption where massiveUpldUpdateOption.RefTableId == refTableId;
+        #
+        #    select forupdate massiveUpldUpdateOption;
+        #
+        #    for (field=1; field <= dictTable.fieldCnt(); field++)
+        #    {
+        #        fieldId = dictTable.fieldCnt2Id(field);
+        #        dictField = new DictField(refTableId, fieldId);
+        #
+        #        if (!dictField.isSystem())
+        #        {
+        #            massiveUpldUpdateOption.RefTableId = refTableId;
+        #            massiveUpldUpdateOption.RefFieldId = fieldId;
+        #            massiveUpldUpdateOption.FieldName = dictField.name();
+        #            massiveUpldUpdateOption.GOA_Update = NoYes::No;
+        #            massiveUpldUpdateOption.insert();
+        #        }
+        #    }
+        #    ttscommit;
+        #}
+      ENDSOURCE
+      SOURCE #GOA_Version
+        #public static FreeTxt GOA_Version()
+        #{
+        #    FreeTxt versionStr;
+        #    str     cr = '\n';
+        #    ;
+        #
+        #    versionStr += ' GOA_MassiveXMLUpload ' + cr;
+        #    return versionStr;
+        #}
+      ENDSOURCE
+      SOURCE #main
+        #public static void main(Args _args)
+        #{
+        #    GOA_UpdateListOfFields    updateListOfFields;
+        #    GOA_MassiveXMLUpload rec;
+        #    Object element;
+        #    ;
+        #    rec = _args.record();
+        #    element = _args.caller();
+        #    updateListOfFields = new GOA_UpdateListOfFields(rec.RefTableId);
+        #
+        #    updateListOfFields.run();
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: END

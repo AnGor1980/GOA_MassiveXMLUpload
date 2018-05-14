@@ -1,0 +1,114 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: GOA_CreateXMLTemplateForUpld unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #GOA_CreateXMLTemplateForUpld
+    PROPERTIES
+      Name                #GOA_CreateXMLTemplateForUpld
+      Origin              #{0668D0A6-CB72-484B-BF54-3EFC37327AE8}
+      LegacyId            #50408
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #classDeclaration
+        #class GOA_CreateXMLTemplateForUpld
+        #{
+        #    FilePath    filepath;
+        #    RefTableId  refTableId;
+        #
+        #    XmlDocument doc;
+        #    XmlElement  nodeXml;
+        #    XmlElement  nodeTable;
+        #    XmlElement  nodeField;
+        #
+        #    DictTable   dictTable;
+        #    DictField   dictField;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #fillXML
+        #protected void fillXML()
+        #{
+        #    int field;
+        #    int fieldId;
+        #
+        #    ;
+        #    nodeTable = doc.createElement(DictTable.name());
+        #    nodeXml.appendChild(nodeTable);
+        #
+        #    for (field=1; field <= dictTable.fieldCnt(); field++)
+        #    {
+        #        fieldId = dictTable.fieldCnt2Id(field);
+        #        dictField = new DictField(refTableId, fieldId);
+        #
+        #        if (!dictField.isSystem())
+        #        {
+        #            nodeField = doc.createElement(dictField.name());
+        #            nodeField.appendChild(doc.createTextNode(enum2str(dictField.baseType())));
+        #            nodeTable.appendChild(nodeField);
+        #        }
+        #    }
+        #
+        #}
+      ENDSOURCE
+      SOURCE #initXML
+        #protected void initXML()
+        #{
+        #    ;
+        #    doc = XmlDocument::newBlank();
+        #    nodeXml = doc.createElement('xml');
+        #    doc.appendChild(nodeXml);
+        #}
+      ENDSOURCE
+      SOURCE #new
+        #void new(Filepath _filepath, RefTableId _TableId)
+        #{
+        #    ;
+        #    filepath    = _filepath;
+        #    refTableId  = _TableId;
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #void run()
+        #{
+        #    ;
+        #    dictTable = new DictTable(refTableId);
+        #    this.initXML();
+        #    this.fillXML();
+        #    this.fillXML();
+        #    doc.save(filepath);
+        #    info(strfmt("File created: %1", filepath));
+        #}
+      ENDSOURCE
+      SOURCE #GOA_Version
+        #public static FreeTxt GOA_Version()
+        #{
+        #    FreeTxt versionStr;
+        #    str     cr = '\n';
+        #    ;
+        #
+        #    versionStr += ' GOA_MassiveXMLUpload ' + cr;
+        #    return versionStr;
+        #}
+      ENDSOURCE
+      SOURCE #main
+        #public static void main(Args _args)
+        #{
+        #    GOA_CreateXMLTemplateForUpld    createXMLTemplateForUpld;
+        #    GOA_MassiveXMLUpload rec;
+        #    ;
+        #    rec = _args.record();
+        #    createXMLTemplateForUpld = new GOA_CreateXMLTemplateForUpld(rec.XMLFilename, rec.RefTableId);
+        #
+        #    createXMLTemplateForUpld.run();
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: END

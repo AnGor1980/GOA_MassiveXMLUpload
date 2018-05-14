@@ -1,0 +1,325 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: GOA_UploadXML unloaded
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #GOA_UploadXML
+    PROPERTIES
+      Name                #GOA_UploadXML
+      Extends             #GOA_CreateXMLTemplateForUpld
+      Origin              #{D1105AE6-E967-4A9B-A090-460310A76510}
+      LegacyId            #50409
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #classDeclaration
+        #class GOA_UploadXML  extends GOA_CreateXMLTemplateForUpld
+        #{
+        #    XmlNodeList             data;
+        #    Common                  tableForTTS;
+        #    GOA_MassiveXMLUpload    massiveXMLUpload;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #findRec
+        #boolean findRec(Common _tableWithData)
+        #{
+        #    IndexId    indexId;
+        #    DictIndex   dictIndex;
+        #
+        #    Query                   query;
+        #    QueryBuildDataSource    qbds;
+        #    QueryBuildRange         qbr;
+        #    QueryRun                queryRun;
+        #
+        #    int field;
+        #    int fieldId;
+        #    DictField   locDictField;
+        #
+        #    boolean updated = false;
+        #
+        #    Common tableValue, tableForUpdate;
+        #    ;
+        #
+        #    tableForUpdate = dictTable.makeRecord();
+        #
+        #    query = new Query();
+        #    qbds = query.addDataSource(refTableId);
+        #
+        #
+        #    indexId = dictTable.primaryIndex();
+        #    dictIndex = new DictIndex(refTableId,indexId);
+        #
+        #    for (field=1; field <= dictIndex.numberOfFields(); field++)
+        #    {
+        #            fieldId = dictIndex.field(field);
+        #            dictField = new DictField(refTableId, fieldId);
+        #
+        #            qbr = qbds.addRange(fieldId);
+        #            qbr.value(queryvalue(_tableWithData.(fieldId)));
+        #            /*
+        #            if((dictField.baseType() == Types::Date) || (dictField.baseType() == Types::UtcDateTime))
+        #                qbr.value(date2str(_tableWithData.(fieldId),123,DateDay::Digits2,DateSeparator::Dot,DateMonth::Digits2,DateSeparator::Dot,DateYear::Digits4));
+        #            else if(dictField.baseType() == Types::Enum)
+        #                qbr.value(queryvalue(_tableWithData.(fieldId)));
+        #            else
+        #                qbr.value(any2str(_tableWithData.(fieldId)));
+        #            */
+        #    }
+        #
+        #    queryRun = new QueryRun(query);
+        #
+        #    if (queryRun.next())
+        #    {
+        #        return true;
+        #    }
+        #    else
+        #    {
+        #        return false;
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #initXML
+        #protected void initXML()
+        #{
+        #    ;
+        #    doc = XmlDocument::newFile(massiveXMLUpload.XMLFilename);
+        #    data = doc.selectNodes('//'+dictTable.name());
+        #}
+      ENDSOURCE
+      SOURCE #makeUpdate
+        #boolean makeUpdate(Common _tableWithData)
+        #{
+        #    IndexId    indexId;
+        #    DictIndex   dictIndex;
+        #
+        #    Query                   query;
+        #    QueryBuildDataSource    qbds;
+        #    QueryBuildRange         qbr;
+        #    QueryRun                queryRun;
+        #
+        #    int field;
+        #    int fieldId;
+        #    DictField   locDictField;
+        #
+        #    boolean updated = false;
+        #
+        #    Common tableValue, tableForUpdate;
+        #    ;
+        #
+        #    tableForUpdate = dictTable.makeRecord();
+        #
+        #    query = new Query();
+        #    qbds = query.addDataSource(refTableId);
+        #
+        #
+        #    //indexId = dictTable.primaryIndex();
+        #    indexId = massiveXMLUpload.indexId;
+        #    if(!indexId)
+        #        indexId = dictTable.primaryIndex();
+        #    dictIndex = new DictIndex(refTableId,indexId);
+        #
+        #    for (field=1; field <= dictIndex.numberOfFields(); field++)
+        #    {
+        #            fieldId = dictIndex.field(field);
+        #            dictField = new DictField(refTableId, fieldId);
+        #
+        #            qbr = qbds.addRange(fieldId);
+        #            qbr.value(queryvalue(_tableWithData.(fieldId)));
+        #            /*
+        #            if((dictField.baseType() == Types::Date) || (dictField.baseType() == Types::UtcDateTime))
+        #                qbr.value(date2str(_tableWithData.(fieldId),123,DateDay::Digits2,DateSeparator::Dot,DateMonth::Digits2,DateSeparator::Dot,DateYear::Digits4));
+        #            else
+        #                qbr.value(any2str(_tableWithData.(fieldId)));
+        #            */
+        #    }
+        #
+        #    queryRun = new QueryRun(query);
+        #    ttsbegin;
+        #    if (queryRun.next())
+        #    {
+        #
+        #        tableValue = queryRun.get(refTableId);
+        #
+        #
+        #        updated = true;
+        #
+        #        if (massiveXMLUpload.UpdateTab)
+        #        {
+        #            select forupdate tableForUpdate
+        #                where tableForUpdate.RecId == tableValue.RecId;
+        #
+        #            for (field=1; field <= dictTable.fieldCnt(); field++)
+        #            {
+        #                fieldId = dictTable.fieldCnt2Id(field);
+        #                dictField = new DictField(refTableId, fieldId);
+        #                if (!dictField.isSystem() && GOA_MassiveUpldUpdateOption::find(refTableId, fieldId).GOA_Update)
+        #                {
+        #                    tableForUpdate.(fieldId) = _tableWithData.(fieldId);
+        #                }
+        #            }
+        #
+        #            tableForUpdate.update();
+        #            updated = true;
+        #        }
+        #
+        #    }
+        #    ttscommit;
+        #    return updated;
+        #}
+      ENDSOURCE
+      SOURCE #new
+        #void new()
+        #{
+        #    //;
+        #}
+      ENDSOURCE
+      SOURCE #readXML
+        #protected void readXML()
+        #{
+        #    int field;
+        #    int fieldId;
+        #    boolean updated;
+        #    boolean inserted = false;
+        #    str nodeTetx;
+        #    ;
+        #    nodeTable = data.nextNode();
+        #
+        #    ttsbegin;
+        #
+        #
+        #
+        #    while (nodeTable)
+        #    {
+        #        for (field=1; field <= dictTable.fieldCnt(); field++)
+        #        {
+        #            fieldId = dictTable.fieldCnt2Id(field);
+        #            dictField = new DictField(refTableId, fieldId);
+        #                if (!dictField.isSystem())
+        #                {
+        #                    nodeField = nodeTable.selectSingleNode(dictField.name());
+        #
+        #                    if(nodeField)
+        #                        nodeTetx = nodeField.text();
+        #                    else
+        #                        nodeTetx = "";
+        #
+        #                    switch (dictField.baseType())
+        #                    {
+        #                        case Types::Date:
+        #                            tableForTTS.(fieldId) = str2date(nodeTetx,123);
+        #                            break;
+        #                        case Types::Date, Types::UtcDateTime :
+        #                            tableForTTS.(fieldId) = str2datetime(nodeTetx ,321 );
+        #                            break;
+        #                        case Types::Guid:
+        #                            tableForTTS.(fieldId) = str2GUID(nodeTetx);
+        #                            break;
+        #                        default :
+        #                            tableForTTS.(fieldId) = nodeTetx;
+        #                            break;
+        #                    }
+        #
+        #                    /*
+        #                    if((dictField.baseType() == Types::Date) || (dictField.baseType() == Types::UtcDateTime))
+        #                        tableForTTS.(fieldId) = str2date(nodeField.text(),123);
+        #                    else
+        #                        tableForTTS.(fieldId) = nodeField.text();
+        #                    */
+        #                }
+        #        }
+        #
+        #        if(massiveXMLUpload.UpdateTab)
+        #        {
+        #            updated = this.makeUpdate(tableForTTS);
+        #        }
+        #
+        #        if ((massiveXMLUpload.InsertTab) && !updated)
+        #        {
+        #            try
+        #            {
+        #//                if (!this.findRec(tableForTTS))
+        #//                {
+        #                    //tableForTTS.insert();
+        #                    tableForTTS.doinsert();
+        #                    inserted = true;
+        #//                }
+        #//                else
+        #//                {
+        #//                    inserted = false;
+        #//                }
+        #
+        #            }
+        #            catch (Exception::DuplicateKeyExceptionNotRecovered)
+        #            {
+        #                inserted = false;
+        #            }
+        #
+        #            catch (Exception::DuplicateKeyException)
+        #            {
+        #                inserted = false;
+        #            }
+        #            catch (Exception::Error)
+        #            {
+        #                inserted = false;
+        #            }
+        #        }
+        #
+        #
+        #        nodeTable = data.nextNode();
+        #    }
+        #    ttscommit;
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #void run()
+        #{
+        #    ;
+        #    while select massiveXMLUpload
+        #        where massiveXMLUpload.Upload
+        #    {
+        #        refTableId = massiveXMLUpload.RefTableId;
+        #
+        #        dictTable = new DictTable(massiveXMLUpload.RefTableId);
+        #        tableForTTS = dictTable.makeRecord();
+        #
+        #        this.initXML();
+        #        this.readXML();
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #GOA_Version
+        #public static FreeTxt GOA_Version()
+        #{
+        #    FreeTxt versionStr;
+        #    str     cr = '\n';
+        #    ;
+        #
+        #    versionStr += ' Proj GOA_MassiveXMLUpload' + cr;
+        #
+        #    return versionStr;
+        #
+        #}
+      ENDSOURCE
+      SOURCE #main
+        #public static void main(Args _args)
+        #{
+        #
+        #    GOA_UploadXML    uploadXML;
+        #    //GOA_MassiveXMLUpload rec;
+        #    ;
+        #    //rec = _args.record();
+        #    //uploadXML = new GOA_UploadXML(rec.XMLFilename, rec.RefTableId);
+        #    uploadXML = new GOA_UploadXML();
+        #
+        #    uploadXML.run();
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: END

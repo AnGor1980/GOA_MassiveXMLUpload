@@ -1,0 +1,538 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: FRM
+
+; Microsoft Dynamics AX Forms unloaded
+; --------------------------------------------------------------------------------
+FRMVERSION 12
+
+FORM #GOA_MassiveXMLUpload
+  PROPERTIES
+    Name                #GOA_MassiveXMLUpload
+    Origin              #{366724FB-FD53-42E4-A828-361171F3FB6D}
+  ENDPROPERTIES
+  
+  METHODS
+    SOURCE #classDeclaration
+      #public class FormRun extends ObjectRun
+      #{
+      #}
+    ENDSOURCE
+    SOURCE #fileNameLookupFilename
+      #str fileNameLookupFilename()
+      #{
+      #    Filename path;
+      #    Filename name;
+      #    Filename type;
+      #    ;
+      #
+      #    [path, name, type] = fileNameSplit(
+      #
+      #    GOA_MassiveXMLUpload.XMLFilename);
+      #
+      #    return name + type;
+      #}
+    ENDSOURCE
+    SOURCE #fileNameLookupFilter
+      #container fileNameLookupFilter()
+      #{
+      #    #File
+      #    ;
+      #    return [WinAPI::fileType(#xml),#AllFilesName+#xml];
+      #}
+    ENDSOURCE
+    SOURCE #filenameLookupInitialPath
+      #str filenameLookupInitialPath()
+      #{
+      #    container file;
+      #    ;
+      #    file = fileNameSplit(
+      #    GOA_MassiveXMLUpload.XMLFilename);
+      #    return conpeek(file ,1);
+      #}
+    ENDSOURCE
+    SOURCE #fileNameLookupTitle
+      #str fileNameLookupTitle()
+      #{
+      #    return "Select XML file";
+      #}
+    ENDSOURCE
+    SOURCE #GOA_Version
+      #public static FreeTxt GOA_Version()
+      #{
+      #    FreeTxt versionStr;
+      #    str     cr = '\n';
+      #    ;
+      #
+      #    versionStr += ' GOA_MassiveXMLUpload ' + cr;
+      #    return versionStr;
+      #}
+    ENDSOURCE
+  ENDMETHODS
+  OBJECTBANK
+    PROPERTIES
+    ENDPROPERTIES
+    
+    DATASOURCE
+      OBJECTPOOL
+        PROPERTIES
+          Name                #GOA_MassiveXMLUpload
+          Table               #GOA_MassiveXMLUpload
+          Index               #idxUpld
+        ENDPROPERTIES
+        
+        FIELDLIST
+        ENDFIELDLIST
+      ENDOBJECTPOOL
+      METHODS
+      ENDMETHODS
+    ENDDATASOURCE
+    DATASOURCE
+      OBJECTPOOL
+        PROPERTIES
+          Name                #GOA_MassiveUpldUpdateOption
+          Table               #GOA_MassiveUpldUpdateOption
+          Index               #idxUpdateOption
+          AllowCreate         #No
+          AllowDelete         #No
+          JoinSource          #GOA_MassiveXMLUpload
+          LinkType            #Active
+        ENDPROPERTIES
+        
+        FIELDLIST
+        ENDFIELDLIST
+      ENDOBJECTPOOL
+      METHODS
+      ENDMETHODS
+    ENDDATASOURCE
+  ENDOBJECTBANK
+  
+  REFERENCEDATASOURCES
+  ENDREFERENCEDATASOURCES
+  
+  JOINS
+    GOA_MassiveUpldUpdateOption GOA_MassiveXMLUpload
+  ENDJOINS
+  
+  PARTREFERENCES
+  ENDPARTREFERENCES
+  
+  DESIGN
+    PROPERTIES
+      Width               #Column width
+      Height              #Column height
+      Caption             #Massive XML Upload
+      WindowResize        #Dynamic
+      SaveSize            #No
+      BackgroundColor     #Button face (3D)
+    ENDPROPERTIES
+    
+    CONTAINER
+      CONTROL BUTTONGROUP
+        PROPERTIES
+          Name                #ButtonGroup
+          ElementPosition     #1610612733
+          HierarchyParent     #Group
+          BackStyle           #Opaque
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL GRID
+        PROPERTIES
+          Name                #Grid
+          Width               #Column width
+          Height              #Column height
+          ElementPosition     #1431655764
+          HierarchyParent     #TabPage
+          DataSource          #GOA_MassiveXMLUpload
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL GRID
+        PROPERTIES
+          Name                #Grid1
+          Width               #Column width
+          Height              #Column height
+          ElementPosition     #1431655764
+          HierarchyParent     #TabPage1
+          DataSource          #GOA_MassiveUpldUpdateOption
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL GROUP
+        PROPERTIES
+          Name                #Group
+          Width               #Column width
+          Height              #Column height
+          ElementPosition     #1073741823
+          BackStyle           #Opaque
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL TAB
+        PROPERTIES
+          Name                #Tab
+          Width               #Column width
+          Height              #Column height
+          ElementPosition     #1073741822
+          HierarchyParent     #Group
+          BackgroundColor     #Button face (3D)
+          BackStyle           #Opaque
+          Columns             #2
+          ArrangeGuide        
+            ARRAY INDEX Columns 
+              #0
+              #0
+            ENDARRAY
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL TABPAGE
+        PROPERTIES
+          Name                #TabPage
+          Width               #Column width
+          Height              #Column height
+          ElementPosition     #1073741822
+          HierarchyParent     #Tab
+          BackgroundColor     #Button face (3D)
+          BackStyle           #Opaque
+          Caption             #@SYS34991
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL TABPAGE
+        PROPERTIES
+          Name                #TabPage1
+          Width               #Column width
+          Height              #Column height
+          ElementPosition     #1610612734
+          HierarchyParent     #Tab
+          BackgroundColor     #Button face (3D)
+          BackStyle           #Opaque
+          Caption             #Update option
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL CHECKBOX
+        PROPERTIES
+          Name                #GOA_MassiveUpldUpdateOption_GOA_Update
+          ElementPosition     #1610612733
+          HierarchyParent     #Grid1
+          BackStyle           #Opaque
+          BackgroundColor     #Window background
+          LabelForegroundColor #Window text
+          DataSource          #GOA_MassiveUpldUpdateOption
+          DataField           #GOA_Update
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL CHECKBOX
+        PROPERTIES
+          Name                #GOA_MassiveXMLUpload_Insert
+          ElementPosition     #1610612730
+          HierarchyParent     #Grid
+          BackStyle           #Opaque
+          BackgroundColor     #Window background
+          LabelForegroundColor #Window text
+          DataSource          #GOA_MassiveXMLUpload
+          DataField           #InsertTab
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL CHECKBOX
+        PROPERTIES
+          Name                #GOA_MassiveXMLUpload_Update
+          ElementPosition     #1342177275
+          HierarchyParent     #Grid
+          BackStyle           #Opaque
+          BackgroundColor     #Window background
+          LabelForegroundColor #Window text
+          DataSource          #GOA_MassiveXMLUpload
+          DataField           #UpdateTab
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL CHECKBOX
+        PROPERTIES
+          Name                #GOA_MassiveXMLUpload_Upload
+          ElementPosition     #1073741820
+          HierarchyParent     #Grid
+          BackStyle           #Opaque
+          BackgroundColor     #Window background
+          LabelForegroundColor #Window text
+          DataSource          #GOA_MassiveXMLUpload
+          DataField           #Upload
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL INTEDIT
+        PROPERTIES
+          Name                #GOA_MassiveXMLUpload_IndexId
+          ElementPosition     #894784850
+          HierarchyParent     #Grid
+          DataSource          #GOA_MassiveXMLUpload
+          DataField           #IndexId
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL INTEDIT
+        PROPERTIES
+          Name                #GOA_MassiveXMLUpload_RefTableId
+          ElementPosition     #536870910
+          HierarchyParent     #Grid
+          BackStyle           #Opaque
+          LabelForegroundColor #Window text
+          DataSource          #GOA_MassiveXMLUpload
+          DataField           #RefTableId
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL MENUITEMBUTTON
+        PROPERTIES
+          Name                #GOA_CreateXMLFileForUpload
+          ElementPosition     #1073741823
+          HierarchyParent     #ButtonGroup
+          BackStyle           #Opaque
+          MenuItemType        #Action
+          MenuItemName        #GOA_CreateXMLFileForUpload
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL MENUITEMBUTTON
+        PROPERTIES
+          Name                #GOA_ExportTableXML
+          ElementPosition     #1789569705
+          HierarchyParent     #ButtonGroup
+          BackStyle           #Opaque
+          DataSource          #GOA_MassiveXMLUpload
+          MenuItemType        #Action
+          MenuItemName        #GOA_ExportTableXML
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL MENUITEMBUTTON
+        PROPERTIES
+          Name                #GOA_UpdateListOfFields
+          ElementPosition     #1431655764
+          HierarchyParent     #ButtonGroup
+          BackStyle           #Opaque
+          DataSource          #GOA_MassiveXMLUpload
+          MenuItemType        #Action
+          MenuItemName        #GOA_UpdateListOfFields
+        ENDPROPERTIES
+        
+        METHODS
+          SOURCE #clicked
+            #void clicked()
+            #{
+            #    super();
+            #    GOA_MassiveUpldUpdateOption_ds.research();
+            #}
+          ENDSOURCE
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL MENUITEMBUTTON
+        PROPERTIES
+          Name                #GOA_UploadXMLFile
+          ElementPosition     #715827882
+          HierarchyParent     #ButtonGroup
+          BackStyle           #Opaque
+          MenuItemType        #Action
+          MenuItemName        #GOA_UploadXMLFile
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL STRINGEDIT
+        PROPERTIES
+          Name                #GOA_MassiveUpldUpdateOption_FieldName
+          ElementPosition     #1073741822
+          HierarchyParent     #Grid1
+          BackStyle           #Opaque
+          LabelForegroundColor #Window text
+          DataSource          #GOA_MassiveUpldUpdateOption
+          DataField           #FieldName
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL STRINGEDIT
+        PROPERTIES
+          Name                #GOA_MassiveXMLUpload_XMLFilename
+          ElementPosition     #1879048185
+          HierarchyParent     #Grid
+          BackStyle           #Opaque
+          LabelForegroundColor #Window text
+          DataSource          #GOA_MassiveXMLUpload
+          DataField           #XMLFilename
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL STRINGEDIT
+        PROPERTIES
+          Name                #StringEdit
+          ElementPosition     #805306365
+          HierarchyParent     #Grid
+          BackStyle           #Opaque
+          LabelForegroundColor #Window text
+          DataSource          #GOA_MassiveXMLUpload
+          DataMethod          #tableName
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL STRINGEDIT
+        PROPERTIES
+          Name                #StringEdit1
+          ElementPosition     #984263335
+          HierarchyParent     #Grid
+          DataSource          #GOA_MassiveXMLUpload
+          DataMethod          #indexName
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+    ENDCONTAINER
+    
+  ENDDESIGN
+  
+  PERMISSIONS #Permissions
+    PROPERTIES
+    ENDPROPERTIES
+    
+    PERMISSIONSET #Read
+      PROPERTIES
+      ENDPROPERTIES
+      
+      FORM #Controls
+      ENDFORM
+      
+    TABLES #Tables
+    ENDTABLES
+    
+  SERVERMETHODS #Server Methods
+  ENDSERVERMETHODS
+  
+ASSOCIATEDFORMS #Associated Forms
+ENDASSOCIATEDFORMS
+
+ENDPERMISSIONSET
+
+PERMISSIONSET #Update
+  PROPERTIES
+  ENDPROPERTIES
+  
+  FORM #Controls
+  ENDFORM
+  
+TABLES #Tables
+ENDTABLES
+
+SERVERMETHODS #Server Methods
+ENDSERVERMETHODS
+
+ASSOCIATEDFORMS #Associated Forms
+ENDASSOCIATEDFORMS
+
+ENDPERMISSIONSET
+
+PERMISSIONSET #Create
+  PROPERTIES
+  ENDPROPERTIES
+  
+  FORM #Controls
+  ENDFORM
+  
+TABLES #Tables
+ENDTABLES
+
+SERVERMETHODS #Server Methods
+ENDSERVERMETHODS
+
+ASSOCIATEDFORMS #Associated Forms
+ENDASSOCIATEDFORMS
+
+ENDPERMISSIONSET
+
+PERMISSIONSET #Delete
+  PROPERTIES
+  ENDPROPERTIES
+  
+  FORM #Controls
+  ENDFORM
+  
+TABLES #Tables
+ENDTABLES
+
+SERVERMETHODS #Server Methods
+ENDSERVERMETHODS
+
+ASSOCIATEDFORMS #Associated Forms
+ENDASSOCIATEDFORMS
+
+ENDPERMISSIONSET
+
+ENDPERMISSIONS
+
+ENDFORM
+
+
+***Element: END
